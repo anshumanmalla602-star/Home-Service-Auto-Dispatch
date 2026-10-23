@@ -1,6 +1,8 @@
 // Lightweight API client with token persistence.
 
-const BASE = '/api'; // Vite proxies /api -> backend :4000
+const BASE = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL.replace(/\/+$/, '')}/api`
+  : '/api';
 
 export const tokenStore = {
   get token() { return localStorage.getItem('hs_token'); },

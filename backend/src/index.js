@@ -26,7 +26,17 @@ const server = http.createServer(app);
 initIo(server);
 
 // ---------- Middleware ----------
-app.use(cors({ origin: process.env.CLIENT_URL || true }));
+const allowedOrigins = [
+  'http://localhost:5173',
+  process.env.CLIENT_URL,
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins.filter(Boolean),
+    credentials: true,
+  })
+);
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 
